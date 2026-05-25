@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  PARKING_ATTENDANT
+}
+
+model User {
+  id         String     @id @default(uuid())
+  firstName  String
+  lastName   String
+  email      String     @unique
+  password   String
+  role       Role       @default(PARKING_ATTENDANT)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  carEntries CarEntry[]
+}
+
+model Parking {
+  id              String     @id @default(uuid())
+  code            String     @unique
+  name            String
+  totalSpaces     Int
+  availableSpaces Int
+  location        String
+  feePerHour      Float
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  carEntries      CarEntry[]
+}
+
+model CarEntry {
+  id            String    @id @default(uuid())
+  plateNumber   String
+  parkingId     String
+  parking       Parking   @relation(fields: [parkingId], references: [id])
+  attendantId   String?
+  attendant     User?     @relation(fields: [attendantId], references: [id])
+  entryDateTime DateTime
+  exitDateTime  DateTime?
+  chargedAmount Float     @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([plateNumber])
+  @@index([entryDateTime])
+  @@index([exitDateTime])
+}
