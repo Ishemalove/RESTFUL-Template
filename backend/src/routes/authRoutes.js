@@ -3,7 +3,12 @@ import rateLimit from 'express-rate-limit';
 import * as authController from '../controllers/authController.js';
 import { authenticate } from '../middleware/auth.js';
 import { validate } from '../middleware/errorHandler.js';
-import { registerValidation, loginValidation } from '../validators/authValidators.js';
+import {
+  registerValidation,
+  loginValidation,
+  verifyOtpValidation,
+  resendOtpValidation,
+} from '../validators/authValidators.js';
 
 const router = Router();
 
@@ -46,6 +51,8 @@ router.post('/register', authLimiter, registerValidation, validate, authControll
  *     tags: [Auth]
  */
 router.post('/login', authLimiter, loginValidation, validate, authController.login);
+router.post('/verify-otp', authLimiter, verifyOtpValidation, validate, authController.verifyOtp);
+router.post('/resend-otp', authLimiter, resendOtpValidation, validate, authController.resendOtp);
 
 /**
  * @swagger

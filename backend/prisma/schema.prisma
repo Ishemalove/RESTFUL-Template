@@ -13,15 +13,19 @@ enum Role {
 }
 
 model User {
-  id         String     @id @default(uuid())
-  firstName  String
-  lastName   String
-  email      String     @unique
-  password   String
-  role       Role       @default(PARKING_ATTENDANT)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  carEntries CarEntry[]
+  id             String     @id @default(uuid())
+  firstName      String
+  lastName       String
+  email          String     @unique
+  password       String
+  role           Role       @default(PARKING_ATTENDANT)
+  emailVerifiedAt DateTime?
+  otpCodeHash    String?
+  otpExpiresAt   DateTime?
+  otpAttempts    Int        @default(0)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  carEntries     CarEntry[]
 }
 
 model Parking {

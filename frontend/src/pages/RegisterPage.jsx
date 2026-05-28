@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authApi } from '../api/client';
-import { useAuth } from '../context/AuthContext';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { loginSuccess } = useAuth();
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -26,8 +24,8 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       const res = await authApi.register(form);
-      loginSuccess(res.data);
-      navigate('/dashboard');
+      const nextEmail = res.data?.email || form.email;
+      navigate(`/verify-otp?email=${encodeURIComponent(nextEmail)}`);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -87,6 +85,8 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
               minLength={8}
+              pattern="(?=.*[A-Z])(?=.*[0-9]).{8,}"
+              title="Password must be at least 8 characters, include an uppercase letter, and include a number."
             />
           </div>
           <div className="form-group">

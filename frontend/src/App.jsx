@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import VerifyOtpPage from './pages/VerifyOtpPage';
 import DashboardPage from './pages/DashboardPage';
 import ParkingsPage from './pages/ParkingsPage';
 import RegisterParkingPage from './pages/RegisterParkingPage';
@@ -22,6 +23,7 @@ export default function App() {
       <Route path="/" element={<HomeRedirect />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/verify-otp" element={<VerifyOtpPage />} />
       <Route
         path="/dashboard"
         element={

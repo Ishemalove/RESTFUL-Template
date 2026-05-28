@@ -17,8 +17,8 @@ export async function apiRequest(path, options = {}) {
 
   if (!res.ok) {
     const msg =
-      data.message ||
       (data.errors?.[0]?.msg) ||
+      data.message ||
       'Request failed';
     throw new Error(msg);
   }
@@ -28,6 +28,8 @@ export async function apiRequest(path, options = {}) {
 export const authApi = {
   register: (body) => apiRequest('/auth/register', { method: 'POST', body: JSON.stringify(body) }),
   login: (body) => apiRequest('/auth/login', { method: 'POST', body: JSON.stringify(body) }),
+  verifyOtp: (body) => apiRequest('/auth/verify-otp', { method: 'POST', body: JSON.stringify(body) }),
+  resendOtp: (body) => apiRequest('/auth/resend-otp', { method: 'POST', body: JSON.stringify(body) }),
   profile: () => apiRequest('/auth/profile'),
 };
 
