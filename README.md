@@ -89,3 +89,4 @@ Recreate the signup page using `docs/FIGMA_MOCKUP_SPEC.md`, or use the live page
 ## Billing rule
 
 Charged amount = `ceil(hours parked) × feePerHour`, minimum 1 hour.
+              
